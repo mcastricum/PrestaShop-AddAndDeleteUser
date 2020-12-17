@@ -15,6 +15,10 @@ public class UserPage {
     WebElement addressIcon;
     @FindBy(className="account")
     WebElement profileIcon;
+//    @FindBy(className="material-icons")
+//    WebElement createIcon;
+    @FindBy(id="history-link")
+    WebElement historyIcon;
 
     public void addressButton () {
         addressIcon.click();
@@ -22,4 +26,10 @@ public class UserPage {
     public void goToPanel () {
         profileIcon.click();
     }
+    public void goToHistory(){
+        historyIcon.click();
+    }
+//    public void goToPanel () {
+//        createIcon.click();
+//    }
 }

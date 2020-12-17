@@ -34,8 +34,11 @@ public class AddressPage {
     @FindBy(className="btn")
     WebElement saveButton;
 
-    @FindBy(css = ".alert.alert-success")
+    @FindBy(css = ".address-body")
     WebElement newAddressInformation;
+
+    @FindBy(css = ".alert.alert-success")
+    WebElement deletedAddressInformation;
 
     @FindBy(xpath = "//a[@data-link-action='delete-address']")
     WebElement deleteClick;
@@ -85,6 +88,6 @@ public class AddressPage {
     }
 
     public String getDeleteInformation() {
-        return newAddressInformation.getText();
+        return deletedAddressInformation.getText();
     }
 }

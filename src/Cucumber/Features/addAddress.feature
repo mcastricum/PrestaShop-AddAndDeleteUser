@@ -11,7 +11,7 @@ Feature: Add new address after login
 
     And User adds and saves new <alias>, <address>, <city>, <postcode>, <country> and <phone>
 
-    Then User gets "Address successfully added!"
+    Then User gets new address "<alias>, <address>, <city>, <postcode>, <country>, <phone>" confirmation
 
     And User deletes address
 

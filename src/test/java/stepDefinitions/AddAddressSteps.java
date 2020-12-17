@@ -13,9 +13,14 @@ import pages.UserPage;
 import java.util.concurrent.TimeUnit;
 
 public class AddAddressSteps {
-    AddressPage addressPage;
+    AddressPage addressPage ;
     UserPage userPage;
     WebDriver driver;
+
+    public void addressElements(String alias, String address, String city, String postcode, String country, String phone) {
+        addressPage = new AddressPage(driver);
+        addressPage.addAddress(alias, address, city, postcode, country, phone);
+    }
 
     @Given("^User logged in to CodersLab shop$")
     public void userLoggedInToCodersLabShop() {
@@ -49,9 +54,16 @@ public class AddAddressSteps {
         addressPage.addAddress(alias, address, city, postcode, country, phone);
     }
 
-    @Then("^User gets \"([^\"]*)\"$")
-    public void addressAdded(String confirmationMessage) {
-        Assert.assertEquals(confirmationMessage, addressPage.getSuccessInformation());
+    @Then("^User gets new address \"(.*), (.*), (.*), (.*), (.*), (.*)\" confirmation")
+    public void addressAdded(String alias, String address, String city, String postcode, String country, String phone) {
+//        Assert.assertTrue(addressInfo.contains("dom"));
+//        Assert.assertEquals(addressInfo, addressPage.getSuccessInformation());
+        Assert.assertTrue(addressPage.getSuccessInformation().contains(alias));
+        Assert.assertTrue(addressPage.getSuccessInformation().contains(address));
+        Assert.assertTrue(addressPage.getSuccessInformation().contains(city));
+        Assert.assertTrue(addressPage.getSuccessInformation().contains(postcode));
+        Assert.assertTrue(addressPage.getSuccessInformation().contains(country));
+        Assert.assertTrue(addressPage.getSuccessInformation().contains(phone));
     }
 
     @And("User deletes address")
