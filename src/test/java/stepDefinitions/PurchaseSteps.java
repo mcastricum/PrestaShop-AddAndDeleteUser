@@ -22,6 +22,10 @@ public class PurchaseSteps {
     UserPage userPage;
     WebDriver driver;
 
+public String orderId;
+
+public String orderPrice;
+
     @Given("^User logged in to Presta Shop$")
     public void userLoggedInToPrestaShop() {
         System.setProperty("webdriver.chrome.driver",
@@ -40,6 +44,12 @@ public class PurchaseSteps {
         homePage.searchProduct(productName);
         homePage.selectProduct();
 
+    }
+
+    @And("^Check if discounted properly$")
+    public void discountValueTest() {
+        productPage = new ProductPage(driver);
+        Assert.assertEquals(productPage.priceAfterDiscount(), productPage.priceADShouldBe(),0.001);
     }
 
     @And("^User selects size (.*)$")
@@ -63,6 +73,11 @@ public class PurchaseSteps {
     public void userAddsProduct() {
         productPage = new ProductPage(driver);
         productPage.addToCart();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @And("^User goes to checkout$")
@@ -115,7 +130,7 @@ public class PurchaseSteps {
     public void userConfirmsPurchase() {
         checkoutPage = new CheckoutPage(driver);
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -125,6 +140,8 @@ public class PurchaseSteps {
     @Then("^Purchase complete and shows (.*)$")
     public void userSees(String actionMessage) throws IOException {
         checkoutPage = new CheckoutPage(driver);
+        orderId = checkoutPage.getOrderId();
+        orderPrice = checkoutPage.getPrice();
         Assert.assertEquals(actionMessage, checkoutPage.getConfirmationInformation());
 
         File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
@@ -132,18 +149,21 @@ public class PurchaseSteps {
         FileUtils.copyFile(scrFile, new File("screenshots/" + fileName));
 //    driver.quit();
     }
-//        @And ("^User checks orders$")
-//        public void goToOrders() {
-//            userPage = new UserPage(driver);
-//            userPage.goToPanel();
-//            userPage.goToHistory();
-//        }
-//
-//        @And ("^User finds new order by (.*) and (.*)$")
-//        public void lookUpOrder() {
-//            Assert.assertEquals(checkoutPage.getOrderId(),userPage.checkOrderId());
-//            Assert.assertEquals(checkoutPage.getPrice(),userPage.checkPrice());
-//
-//        }
+        @And ("^User checks orders$")
+        public void goToOrders() {
+            userPage = new UserPage(driver);
+            userPage.goToPanel();
+            userPage.goToHistory();
+        }
+
+        @And ("^User finds new order$")
+        public void lookUpOrder() {
+            userPage = new UserPage(driver);
+            System.out.println(userPage.getOrderDetails());
+            Assert.assertTrue(userPage.getOrderDetails().contains(orderId));
+            Assert.assertTrue(userPage.getOrderDetails().contains(orderPrice));
+            Assert.assertTrue(userPage.getOrderDetails().contains("Awaiting check payment"));
+
+        }
 
 }

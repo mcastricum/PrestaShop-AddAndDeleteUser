@@ -26,6 +26,15 @@ public class ProductPage {
     @FindBy(css = ".btn.btn-primary")
     WebElement toAddressButton;
 
+    @FindBy(xpath = "//*[@id=\"main\"]/div[1]/div[2]/div[1]/div[2]/div/span[1]")
+    WebElement discountedPrice;
+
+    @FindBy(css = ".discount.discount-percentage")
+    WebElement discountPercent;
+
+    @FindBy(className = "regular-price")
+    WebElement toRegularPrice;
+
     public void selectSize(String size) {
         Select sizeInput = new Select(driver.findElement(By.id("group_1")));
         sizeInput.selectByVisibleText(size);
@@ -48,4 +57,30 @@ public class ProductPage {
         toAddressButton.click();
     }
 
+    //Cena po przecenie wg Presta
+    public double priceAfterDiscount() {
+        String dP = discountedPrice.getText().substring(1);
+        return Double.parseDouble(dP);
+    }
+
+    // Cena regularna
+    public double regularPrice() {
+        String rP = toRegularPrice.getText().substring(1);
+        return Double.parseDouble(rP);
+    }
+
+    //Wysokość zniżki
+    public double discountPercentValue() {
+        String percent = discountPercent.getText().substring(5,7);
+        return Double.parseDouble(percent);
+    }
+
+    //Kalkulator
+    public double priceADShouldBe () {
+        double discountValue = regularPrice() * (discountPercentValue()/100);
+        double totalDiscount = regularPrice() - discountValue;
+        return totalDiscount;
+    }
+
+    //Cena po zniżce
 }

@@ -20,6 +20,10 @@ public class UserPage {
     @FindBy(id="history-link")
     WebElement historyIcon;
 
+    @FindBy(xpath = "//*[@id='content']/table/tbody/tr[1]")
+    WebElement orderDetails;
+
+
     public void addressButton () {
         addressIcon.click();
     }
@@ -28,6 +32,9 @@ public class UserPage {
     }
     public void goToHistory(){
         historyIcon.click();
+    }
+    public String getOrderDetails(){
+        return orderDetails.getText();
     }
 //    public void goToPanel () {
 //        createIcon.click();

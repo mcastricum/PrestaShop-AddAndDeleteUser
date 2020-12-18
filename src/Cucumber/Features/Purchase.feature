@@ -7,6 +7,8 @@ Feature: Purchase product
 
     When User chooses Hummingbird Printed Sweater
 
+    And Check if discounted properly
+
     And User selects size L
 
     And User takes 5 pcs

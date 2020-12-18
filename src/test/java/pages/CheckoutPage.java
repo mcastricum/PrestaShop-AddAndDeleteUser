@@ -66,12 +66,12 @@ public class CheckoutPage {
         return successInformation.getText();
     }
 
-//    public void String getOrderId() {
-//        return orderId.getText();
-//    }
-//
-//    public void String getPrice() {
-//        return orderPrice.getText();
-//    }
+    public String getOrderId() {
+        return orderId.getText().substring(18);
+    }
+
+    public String getPrice() {
+        return orderPrice.getText();
+    }
 
 }
