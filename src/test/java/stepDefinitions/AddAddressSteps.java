@@ -39,14 +39,13 @@ public class AddAddressSteps {
         userPage = new UserPage(driver);
         userPage.goToPanel ();
         userPage.addressButton ();
+//        driver = new ChromeDriver();
 //        driver.get("https://prod-kurs.coderslab.pl/index.php?controller=addresses");
-    }
-
-//    @And("^User creates new address$")
-//    public void userCreatesNewAddress() {
 //        addressPage = new AddressPage(driver);
 //        addressPage.createAddress();
-//    }
+    }
+
+
 
     @And("^User adds and saves new (.*), (.*), (.*), (.*), (.*) and (.*)$")
     public void userAddsNewAddress(String alias, String address, String city, String postcode, String country, String phone) {
@@ -56,8 +55,6 @@ public class AddAddressSteps {
 
     @Then("^User gets new address \"(.*), (.*), (.*), (.*), (.*), (.*)\" confirmation")
     public void addressAdded(String alias, String address, String city, String postcode, String country, String phone) {
-//        Assert.assertTrue(addressInfo.contains("dom"));
-//        Assert.assertEquals(addressInfo, addressPage.getSuccessInformation());
         Assert.assertTrue(addressPage.getSuccessInformation().contains(alias));
         Assert.assertTrue(addressPage.getSuccessInformation().contains(address));
         Assert.assertTrue(addressPage.getSuccessInformation().contains(city));

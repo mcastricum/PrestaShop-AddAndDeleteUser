@@ -15,7 +15,7 @@ public class UserPage {
     WebElement addressIcon;
     @FindBy(className="account")
     WebElement profileIcon;
-//    @FindBy(className="material-icons")
+//    @FindBy(xpath="//*[@id="content"]/div[2]/a/i")
 //    WebElement createIcon;
     @FindBy(id="history-link")
     WebElement historyIcon;
